@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>地址栏截取参数</title>
+</head>
+
+<body>
+    <script>
+        var url = '?enterpriseCode=8b971186574c4bba8e20179c546fd7d8&userId=F81384E7652360260A48A8EE3A81A011&textId=77862598-cbcf-439a-b88d-f6163eea0abd&diagnosisYear=2020&enterpriseName=%E5%8A%A0%E7%8F%AD4%E4%BC%81%E4%B8%9A&telphone=13100000000&province=%E5%90%89%E6%9E%97%E7%9C%81&city=%E6%9D%BE%E5%8E%9F%E5%B8%82&userName=jiaban4&nav=1'
+        // 获取对应参数的值
+        function getUrlParam(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+            var r = url.substr(1).match(reg); //匹配目标参数
+            console.log(url.substr(1))
+            console.log(url.match(reg))
+            console.log(r)
+            if (r != null) return decodeURI(r[2]); //decodeURI参数内容。
+            return null; //返回参数值
+        }
+        getUrlParam('enterpriseCode')
+        // 获取指定name后的值
+        function getUrlParams02(param) {
+            var query = window.location.search.substring(1);
+            var vars = query.split("&");
+            for (var i = 0; i < vars.length; i++) {
+                var pair = vars[i].split("=");
+                if (pair[0] == param) { return pair[1]; }
+            }
+            return false;
+        }
+
+    </script>
+</body>
+
+</html>

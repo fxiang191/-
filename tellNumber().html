@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数字转英文方法（出题方  解法一）</title>
+</head>
+
+<body>
+    <script>
+        var smallNumber = {
+            0: 'zero',
+            1: 'one',
+            2: 'two',
+            3: 'three',
+            4: 'four',
+            5: 'five',
+            6: 'six',
+            7: 'seven',
+            8: 'eight',
+            9: 'nine',
+            10: 'ten',
+            11: 'eleven',
+            12: 'twelve',
+            13: 'thirteen',
+            14: 'fourteen',
+            15: 'fifteen',
+            16: 'sixteen',
+            17: 'seventeen',
+            18: 'eighteen',
+            19: 'nineteen',
+            20: 'twenty'
+        }
+
+        var unit = {
+            0: '',
+            1: 'thousand',
+            2: 'million',
+            3: 'billion'
+        }
+        var tweenToHunredNumber = {
+            2: 'twenty',
+            3: 'thirty',
+            4: 'forty',
+            5: 'fifty',
+            6: 'sixty',
+            7: 'seventy',
+            8: 'eighty',
+            9: 'ninety'
+        }
+        function tellNumberInThousand(num, idx) {//千、百万、十亿
+            if (num < 1000) {
+
+                // 小于1000
+                var val = smallNumber[num];
+                if (val !== void 0) {
+                    return val + " " + unit[idx];
+                } else {
+                    var word = '';
+                    if (num >= 100) {
+                        word += ' ' + smallNumber[(num / 100 | 0)] + ' hundred';
+                        num = num % 100;
+                    }
+                    if (num >= 20) {
+                        1
+                        word += ' ' + tweenToHunredNumber[(num / 10 | 0)];
+                        var val = num % 10 | 0;
+                        if (val !== 0) {
+                            1
+                            word += ' ' + smallNumber[val];
+                        }
+                    } else {
+                        1
+                        word += ' ' + smallNumber[num];
+                    }
+                    return word + ' ' + unit[idx];
+                }
+            } else {
+                var restNum = num % 1000;
+                num = num / 1000 | 0;
+                var val = tellNumberInThousand(num, idx + 1);
+                if (restNum !== 0) {
+                    return val + tellNumberInThousand(restNum, idx);
+                } else {
+                    return val;
+                }
+            }
+        }
+        function tellNumber(num) {
+            if (isNaN(num)) {
+                return "Not a Number Fucker";
+            }
+            var val = smallNumber[num];
+            if (val !== void 0) {
+                return val;
+            } else {
+                return tellNumberInThousand(num, 0);
+            }
+        }
+    </script>
+</body>
+
+</html>
