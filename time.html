@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue from表单 及控制</title>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <style>
+        #formItem .el-form-item__content{
+            margin-left: 0px!important;
+        }
+    </style>
+</head>
+
+<body>
+    <div id=app>
+        <el-form ref="formData" :model="formData" label-width="80px">
+            <el-row :gutter="24">
+                <el-col :span="5" :offset="6">
+                    <el-form-item label="活动时间">
+                        <el-date-picker type="date" placeholder="开始日期" :picker-options="pickerOptions1"
+                            value-formDataat="yyyy-MM-dd" v-model="formData.date1" style="width: 100%;">
+                        </el-date-picker>
+                    </el-form-item>
+                </el-col>
+                <!-- <el-col class="line" :span="1" style="text-align: center;">
+                    <el-form-item>
+                        -
+                    </el-form-item>
+                </el-col> -->
+                <el-col :span="5" id="formItem">
+                    <el-form-item>
+                        <!-- el-form-item__content class样式 margin-left: 80px;-->
+                        <span style="margin-right: 15px;">-</span>
+                        <el-date-picker type="date" value-formDataat="yyyy-MM-dd" :picker-options="pickerOptions2"
+                            placeholder="结束日期" v-model="formData.date2" style="width: 80%;">
+                        </el-date-picker>
+                    </el-form-item>
+                </el-col>
+            </el-row>
+        </el-form>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script>
+        new Vue({
+            el: "#app",
+            data() {
+                return {
+                    formData: {
+                        date1: '2020-04-11',
+                        date2: ''
+                    },
+                    pickerOptions1: {
+                        disabledDate: time => {
+                            let tempFlag = true, pickTime;
+                            if (!this.formData.date2) {
+                                pickTime = Date.now();
+                                if (time.getTime() > pickTime) {
+                                    tempFlag = true;
+                                } else {
+                                    tempFlag = false;
+                                }
+                            } else {
+                                pickTime = new Date(this.formData.date2).getTime();
+                                if (time.getTime() < pickTime && time.getTime() < Date.now()) {
+                                    tempFlag = false;
+                                } else {
+                                    tempFlag = true;
+                                }
+                            }
+                            return tempFlag;
+                        }
+                    },
+                    pickerOptions2: {
+                        disabledDate: time => {
+                            let tempFlag = true, pickTime;
+                            if (!this.formData.date1) {
+                                pickTime = Date.now();
+                                if (time.getTime() > pickTime) {
+                                    tempFlag = true;
+                                } else {
+                                    tempFlag = false;
+                                }
+                            } else {
+                                pickTime = new Date(this.formData.date1).getTime();
+                                if (time.getTime() + 3600 * 1000 * 24 > pickTime && time.getTime() < Date.now()) {
+                                    tempFlag = false;
+                                } else {
+                                    tempFlag = true;
+                                }
+                            }
+                            return tempFlag;
+                        }
+                    },
+                }
+            },
+            methods: {
+            },
+            created() {
+                console.log(this.formData.date1)
+                console.log(this.formData.date2)
+                console.log('111111')
+            }
+        })    
+    </script>
+</body>
+
+</html>
